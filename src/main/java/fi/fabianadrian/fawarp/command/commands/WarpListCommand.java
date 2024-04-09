@@ -25,7 +25,19 @@ public final class WarpListCommand extends FAWarpCommand {
 		Component header = Component.translatable("fawarp.command.warplist.header");
 
 		StringJoiner joiner = new StringJoiner(", ");
-		this.plugin.warpManager().warps().forEach(warp -> joiner.add(warp.name()));
+		this.plugin.warpManager().warps().forEach(warp -> {
+			if (!context.sender().hasPermission(warp.permission())) {
+				return;
+			}
+
+			joiner.add(warp.name());
+		});
+
+		String availableWarps = joiner.toString();
+		if (availableWarps.isBlank()) {
+			context.sender().sendMessage(Component.translatable("fawarp.command.warplist.empty"));
+			return;
+		}
 
 		context.sender().sendMessage(Component.join(JoinConfiguration.newlines(), header, Component.text(joiner.toString())));
 	}
