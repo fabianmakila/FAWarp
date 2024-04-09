@@ -1,5 +1,3 @@
-import net.minecrell.pluginyml.paper.PaperPluginDescription
-
 plugins {
     id("java")
     id("com.github.johnrengelman.shadow") version "8.1.1"
@@ -8,7 +6,7 @@ plugins {
 }
 
 group = "fi.fabianadrian"
-version = "1.0.0"
+version = "1.1.0"
 
 repositories {
     mavenCentral()
