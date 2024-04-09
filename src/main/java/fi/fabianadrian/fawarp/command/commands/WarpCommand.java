@@ -24,7 +24,7 @@ public final class WarpCommand extends FAWarpCommand {
 	public void register() {
 		Command.Builder<CommandSender> builder = this.manager.commandBuilder("warp").permission("fawarp.command.warp").required("warp", WarpParser.warpParser());
 		this.manager.command(builder.senderType(Player.class).handler(this::warpHandler));
-		this.manager.command(builder.required("entity", MultiplePlayerSelectorParser.multiplePlayerSelectorParser()).permission("fawarp.command.warp.other").handler(this::warpOtherHandler));
+		this.manager.command(builder.required("player", MultiplePlayerSelectorParser.multiplePlayerSelectorParser()).permission("fawarp.command.warp.player").handler(this::warpOtherHandler));
 	}
 
 	private void warpHandler(CommandContext<Player> context) {
@@ -35,7 +35,7 @@ public final class WarpCommand extends FAWarpCommand {
 
 	private void warpOtherHandler(CommandContext<CommandSender> context) {
 		Warp warp = context.get("warp");
-		Selector<Player> selector = context.get("entity");
+		Selector<Player> selector = context.get("player");
 
 		Collection<Player> players = selector.values();
 		players.forEach(player -> {
