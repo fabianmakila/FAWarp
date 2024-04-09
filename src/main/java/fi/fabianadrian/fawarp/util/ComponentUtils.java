@@ -3,7 +3,7 @@ package fi.fabianadrian.fawarp.util;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 
-public class ComponentUtils {
+public final class ComponentUtils {
 
 	public static Component locationComponent(Location location) {
 		String content = String.format(
