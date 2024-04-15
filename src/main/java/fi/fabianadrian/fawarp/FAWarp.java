@@ -31,19 +31,9 @@ public final class FAWarp extends JavaPlugin {
 		this.configurationManager = new ConfigurationManager(this);
 		this.warpManager = new WarpManager(this);
 
-		this.commandManager = PaperCommandManager.createNative(this, ExecutionCoordinator.simpleCoordinator());
-
-		if (this.commandManager.hasCapability(CloudBukkitCapabilities.NATIVE_BRIGADIER)) {
-			this.commandManager.registerBrigadier();
-		} else if (commandManager.hasCapability(CloudBukkitCapabilities.ASYNCHRONOUS_COMPLETION)) {
-			this.commandManager.registerAsynchronousCompletions();
-		}
-
-		this.commandManager.registerCommandPreProcessor(new FAWarpCommandPreprocessor<>(this));
-		this.commandManager.captionRegistry().registerProvider(TranslatableCaption.translatableCaptionProvider());
-		MinecraftExceptionHandler.<CommandSender>createNative().defaultHandlers().captionFormatter(FAWarpComponentCaptionFormatter.translatable()).registerTo(this.commandManager);
-
+		setupCommandManager();
 		registerCommands();
+
 		registerListeners();
 	}
 
@@ -62,6 +52,20 @@ public final class FAWarp extends JavaPlugin {
 
 	public WarpManager warpManager() {
 		return this.warpManager;
+	}
+
+	private void setupCommandManager() {
+		this.commandManager = PaperCommandManager.createNative(this, ExecutionCoordinator.simpleCoordinator());
+
+		if (this.commandManager.hasCapability(CloudBukkitCapabilities.NATIVE_BRIGADIER)) {
+			this.commandManager.registerBrigadier();
+		} else if (commandManager.hasCapability(CloudBukkitCapabilities.ASYNCHRONOUS_COMPLETION)) {
+			this.commandManager.registerAsynchronousCompletions();
+		}
+
+		this.commandManager.registerCommandPreProcessor(new FAWarpCommandPreprocessor<>(this));
+		this.commandManager.captionRegistry().registerProvider(TranslatableCaption.translatableCaptionProvider());
+		MinecraftExceptionHandler.<CommandSender>createNative().defaultHandlers().captionFormatter(FAWarpComponentCaptionFormatter.translatable()).registerTo(this.commandManager);
 	}
 
 	private void registerCommands() {
