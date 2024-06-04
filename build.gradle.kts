@@ -14,18 +14,18 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:1.20.6-R0.1-SNAPSHOT")
 
     implementation("org.spongepowered:configurate-yaml:4.1.2") {
         exclude("org.yaml")
     }
 
-    implementation("org.incendo:cloud-paper:2.0.0-beta.2")
-    implementation("org.incendo:cloud-minecraft-extras:2.0.0-beta.2")
+    implementation("org.incendo:cloud-paper:2.0.0-beta.7")
+    implementation("org.incendo:cloud-minecraft-extras:2.0.0-beta.6")
 }
 
 java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+    toolchain.languageVersion.set(JavaLanguageVersion.of(21))
 }
 
 tasks {
