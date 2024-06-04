@@ -45,7 +45,7 @@ public final class RootCommand extends FAWarpCommand {
 								.entries()
 								.stream()
 								.map(CommandEntry::syntax)
-								.map(Suggestion::simple)
+								.map(Suggestion::suggestion)
 								.collect(Collectors.toList())))
 				.handler(context -> help.queryCommands(context.get("query"), context.sender()));
 		this.manager.command(helpBuilder);
