@@ -1,7 +1,7 @@
 package fi.fabianadrian.fawarp;
 
 import fi.fabianadrian.fawarp.command.FAWarpCommand;
-import fi.fabianadrian.fawarp.command.FAWarpComponentCaptionFormatter;
+import fi.fabianadrian.fawarp.command.FAWarpCaptionFormatter;
 import fi.fabianadrian.fawarp.command.commands.*;
 import fi.fabianadrian.fawarp.command.processor.FAWarpCommandPreprocessor;
 import fi.fabianadrian.fawarp.config.ConfigurationManager;
@@ -15,12 +15,12 @@ import org.incendo.cloud.bukkit.CloudBukkitCapabilities;
 import org.incendo.cloud.execution.ExecutionCoordinator;
 import org.incendo.cloud.minecraft.extras.MinecraftExceptionHandler;
 import org.incendo.cloud.minecraft.extras.caption.TranslatableCaption;
-import org.incendo.cloud.paper.PaperCommandManager;
+import org.incendo.cloud.paper.LegacyPaperCommandManager;
 
 import java.util.List;
 
 public final class FAWarp extends JavaPlugin {
-	private PaperCommandManager<CommandSender> commandManager;
+	private LegacyPaperCommandManager<CommandSender> commandManager;
 	private ConfigurationManager configurationManager;
 	private WarpManager warpManager;
 
@@ -37,7 +37,7 @@ public final class FAWarp extends JavaPlugin {
 		registerListeners();
 	}
 
-	public PaperCommandManager<CommandSender> commandManager() {
+	public LegacyPaperCommandManager<CommandSender> commandManager() {
 		return this.commandManager;
 	}
 
@@ -55,7 +55,7 @@ public final class FAWarp extends JavaPlugin {
 	}
 
 	private void setupCommandManager() {
-		this.commandManager = PaperCommandManager.createNative(this, ExecutionCoordinator.simpleCoordinator());
+		this.commandManager = LegacyPaperCommandManager.createNative(this, ExecutionCoordinator.simpleCoordinator());
 
 		if (this.commandManager.hasCapability(CloudBukkitCapabilities.NATIVE_BRIGADIER)) {
 			this.commandManager.registerBrigadier();
@@ -65,7 +65,7 @@ public final class FAWarp extends JavaPlugin {
 
 		this.commandManager.registerCommandPreProcessor(new FAWarpCommandPreprocessor<>(this));
 		this.commandManager.captionRegistry().registerProvider(TranslatableCaption.translatableCaptionProvider());
-		MinecraftExceptionHandler.<CommandSender>createNative().defaultHandlers().captionFormatter(FAWarpComponentCaptionFormatter.translatable()).registerTo(this.commandManager);
+		MinecraftExceptionHandler.<CommandSender>createNative().defaultHandlers().captionFormatter(new FAWarpCaptionFormatter<>()).registerTo(this.commandManager);
 	}
 
 	private void registerCommands() {

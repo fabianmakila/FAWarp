@@ -2,11 +2,11 @@ package fi.fabianadrian.fawarp.command;
 
 import fi.fabianadrian.fawarp.FAWarp;
 import org.bukkit.command.CommandSender;
-import org.incendo.cloud.paper.PaperCommandManager;
+import org.incendo.cloud.paper.LegacyPaperCommandManager;
 
 public abstract class FAWarpCommand {
 	protected final FAWarp plugin;
-	protected final PaperCommandManager<CommandSender> manager;
+	protected final LegacyPaperCommandManager<CommandSender> manager;
 
 	public FAWarpCommand(FAWarp plugin) {
 		this.plugin = plugin;
