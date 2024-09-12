@@ -1,8 +1,8 @@
 plugins {
     id("java")
-    id("com.gradleup.shadow") version "8.3.0"
+    id("com.gradleup.shadow") version "8.3.1"
     id("net.minecrell.plugin-yml.paper") version "0.6.0"
-    id("com.diffplug.spotless") version "7.0.0.BETA1"
+    id("com.diffplug.spotless") version "7.0.0.BETA2"
 }
 
 group = "fi.fabianadrian"
@@ -20,8 +20,8 @@ dependencies {
         exclude("org.yaml")
     }
 
-    implementation("org.incendo:cloud-paper:2.0.0-beta.9")
-    implementation("org.incendo:cloud-minecraft-extras:2.0.0-beta.9")
+    implementation("org.incendo:cloud-paper:2.0.0-beta.10")
+    implementation("org.incendo:cloud-minecraft-extras:2.0.0-beta.10")
 }
 
 java {
