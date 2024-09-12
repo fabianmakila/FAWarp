@@ -46,7 +46,7 @@ tasks {
 
 paper {
     main = "fi.fabianadrian.fawarp.FAWarp"
-    apiVersion = "1.19"
+    apiVersion = "1.19.4"
     authors = listOf("FabianAdrian")
 }
 
