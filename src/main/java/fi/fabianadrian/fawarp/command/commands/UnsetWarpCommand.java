@@ -9,7 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.incendo.cloud.Command;
 import org.incendo.cloud.context.CommandContext;
 
-public class UnsetWarpCommand extends FAWarpCommand {
+public final class UnsetWarpCommand extends FAWarpCommand {
 	public UnsetWarpCommand(FAWarp plugin) {
 		super(plugin);
 	}
