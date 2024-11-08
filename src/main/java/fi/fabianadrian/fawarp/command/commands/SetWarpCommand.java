@@ -4,6 +4,7 @@ import fi.fabianadrian.fawarp.FAWarp;
 import fi.fabianadrian.fawarp.command.FAWarpCommand;
 import fi.fabianadrian.fawarp.util.ComponentUtils;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TranslatableComponent;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -12,16 +13,24 @@ import org.incendo.cloud.bukkit.parser.location.LocationParser;
 import org.incendo.cloud.context.CommandContext;
 import org.incendo.cloud.parser.standard.StringParser;
 
+import static net.kyori.adventure.text.Component.text;
+import static net.kyori.adventure.text.Component.translatable;
+import static org.incendo.cloud.bukkit.parser.location.LocationParser.locationParser;
+import static org.incendo.cloud.parser.standard.StringParser.stringParser;
+
 public final class SetWarpCommand extends FAWarpCommand {
+	private static final TranslatableComponent COMPONENT_SETWARP = translatable("fawarp.command.setwarp");
+	private static final TranslatableComponent COMPONENT_SETWARP_UPDATE = translatable("fawarp.command.setwarp.update");
+
 	public SetWarpCommand(FAWarp plugin) {
 		super(plugin);
 	}
 
 	@Override
 	public void register() {
-		Command.Builder<CommandSender> setBuilder = this.manager.commandBuilder("setwarp").permission("fawarp.command.setwarp").required("name", StringParser.stringParser());
+		Command.Builder<CommandSender> setBuilder = this.manager.commandBuilder("setwarp").permission("fawarp.command.setwarp").required("name", stringParser());
 		this.manager.command(setBuilder.senderType(Player.class).handler(this::setHandler));
-		this.manager.command(setBuilder.required("location", LocationParser.locationParser()).handler(this::setCoordinateHandler));
+		this.manager.command(setBuilder.required("location", locationParser()).handler(this::setCoordinateHandler));
 	}
 
 	private void setHandler(CommandContext<Player> context) {
@@ -31,9 +40,9 @@ public final class SetWarpCommand extends FAWarpCommand {
 		Location previousLocation = this.plugin.warpManager().set(warpName, sender.getLocation());
 
 		if (previousLocation != null) {
-			sender.sendMessage(Component.translatable("fawarp.command.setwarp.updated").arguments(Component.text(warpName), ComponentUtils.locationComponent(previousLocation), ComponentUtils.locationComponent(sender.getLocation())));
+			sender.sendMessage(COMPONENT_SETWARP_UPDATE.arguments(text(warpName), ComponentUtils.locationComponent(previousLocation), ComponentUtils.locationComponent(sender.getLocation())));
 		} else {
-			sender.sendMessage(Component.translatable("fawarp.command.setwarp").arguments(Component.text(warpName), ComponentUtils.locationComponent(sender.getLocation())));
+			sender.sendMessage(COMPONENT_SETWARP.arguments(text(warpName), ComponentUtils.locationComponent(sender.getLocation())));
 		}
 	}
 
@@ -47,9 +56,9 @@ public final class SetWarpCommand extends FAWarpCommand {
 		}
 
 		if (previousLocation != null) {
-			context.sender().sendMessage(Component.translatable("fawarp.command.setwarp.update").arguments(Component.text(warpName), ComponentUtils.locationComponent(previousLocation), ComponentUtils.locationComponent(location)));
+			context.sender().sendMessage(COMPONENT_SETWARP_UPDATE.arguments(text(warpName), ComponentUtils.locationComponent(previousLocation), ComponentUtils.locationComponent(location)));
 		} else {
-			context.sender().sendMessage(Component.translatable("fawarp.command.setwarp").arguments(Component.text(warpName), ComponentUtils.locationComponent(location)));
+			context.sender().sendMessage(COMPONENT_SETWARP.arguments(text(warpName), ComponentUtils.locationComponent(location)));
 		}
 	}
 }

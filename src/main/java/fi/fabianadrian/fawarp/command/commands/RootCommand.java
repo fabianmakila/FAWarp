@@ -12,13 +12,17 @@ import org.incendo.cloud.context.CommandContext;
 import org.incendo.cloud.help.result.CommandEntry;
 import org.incendo.cloud.minecraft.extras.AudienceProvider;
 import org.incendo.cloud.minecraft.extras.MinecraftHelp;
-import org.incendo.cloud.parser.standard.StringParser;
 import org.incendo.cloud.suggestion.Suggestion;
 import org.incendo.cloud.suggestion.SuggestionProvider;
 
 import java.util.stream.Collectors;
 
+import static net.kyori.adventure.text.Component.translatable;
+import static org.incendo.cloud.parser.standard.StringParser.greedyStringParser;
+
 public final class RootCommand extends FAWarpCommand {
+	private static final Component COMPONENT_RELOAD = translatable("fawarp.command.root.reload");
+
 	public RootCommand(FAWarp plugin) {
 		super(plugin);
 	}
@@ -38,7 +42,7 @@ public final class RootCommand extends FAWarpCommand {
 		Command.Builder<CommandSender> helpBuilder = builder.literal("help")
 				.optional(
 						"query",
-						StringParser.greedyStringParser(),
+						greedyStringParser(),
 						DefaultValue.constant(""),
 						SuggestionProvider.blocking((ctx, in) -> this.manager.createHelpHandler()
 								.queryRootIndex(ctx.sender())
@@ -53,6 +57,6 @@ public final class RootCommand extends FAWarpCommand {
 
 	private void reloadHandler(CommandContext<CommandSender> context) {
 		this.plugin.reload();
-		context.sender().sendMessage(Component.translatable("fawarp.command.root.reload"));
+		context.sender().sendMessage(COMPONENT_RELOAD);
 	}
 }

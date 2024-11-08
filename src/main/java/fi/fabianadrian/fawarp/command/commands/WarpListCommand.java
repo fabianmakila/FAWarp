@@ -10,7 +10,13 @@ import org.incendo.cloud.context.CommandContext;
 
 import java.util.StringJoiner;
 
+import static net.kyori.adventure.text.Component.text;
+import static net.kyori.adventure.text.Component.translatable;
+
 public final class WarpListCommand extends FAWarpCommand {
+	private static final Component COMPONENT_HEADER = translatable("fawarp.command.warplist.header");
+	private static final Component COMPONENT_EMPTY = translatable("fawarp.command.warplist.empty");
+
 	public WarpListCommand(FAWarp plugin) {
 		super(plugin);
 	}
@@ -22,8 +28,6 @@ public final class WarpListCommand extends FAWarpCommand {
 	}
 
 	private void listHandler(CommandContext<CommandSender> context) {
-		Component header = Component.translatable("fawarp.command.warplist.header");
-
 		StringJoiner joiner = new StringJoiner(", ");
 		this.plugin.warpManager().warps().forEach(warp -> {
 			if (!context.sender().hasPermission(warp.permission())) {
@@ -35,10 +39,10 @@ public final class WarpListCommand extends FAWarpCommand {
 
 		String availableWarps = joiner.toString();
 		if (availableWarps.isBlank()) {
-			context.sender().sendMessage(Component.translatable("fawarp.command.warplist.empty"));
+			context.sender().sendMessage(COMPONENT_EMPTY);
 			return;
 		}
 
-		context.sender().sendMessage(Component.join(JoinConfiguration.newlines(), header, Component.text(joiner.toString())));
+		context.sender().sendMessage(Component.join(JoinConfiguration.newlines(), COMPONENT_HEADER, text(joiner.toString())));
 	}
 }
